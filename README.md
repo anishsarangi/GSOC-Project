@@ -1,6 +1,6 @@
 # GSOC project Of Wayback Machine Chrome Extension for Internet Archive
 
-This is the project I helped in building along with several contributors for GSOC 18, Internet archive under the mentorship of Abhishek Das (abhidas@archive.org). I am also thankful to Mark Graham (mark@archive.org) for giving me this opporchunity.
+This is the project I helped in building along with several contributors for GSOC 18, Internet archive under the mentorship of Abhishek Das (abhidas@archive.org). I am also thankful to Mark Graham (mark@archive.org) for giving me this opportunity.
 
 I worked on the following things, added some new features for the wayback machine chrome extensions. They include :
 ## The project goals :
@@ -35,6 +35,9 @@ Different way that we provide context
 * Showing the Context Screens in tabs
 * Showing the Context Screens in windows
 * Showing the Context Screens in a single-window
+
+## 5.Borrow Books Feature :
+This is the feature that I have worked on the last month. If a user is on a amazon books site, then the user can borrow that book from Archive.org (If we have that book).This feature is also controlled by the user. We provide a small change in icon to "B" indicating we have that book. User can get the link to borrow the books from the extension pop-up window.
 
 ### Things left to do/complete
 1) Improve the UI
