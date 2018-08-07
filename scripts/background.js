@@ -2,7 +2,7 @@
 * License: AGPL-3
 * Copyright 2016, Internet Archive
 */
-var VERSION = "2.18.7";
+var VERSION = "2.19.2";
 Globalstatuscode="";
 var excluded_urls = [
   "localhost",
@@ -992,6 +992,46 @@ chrome.tabs.onUpdated.addListener(function(tabId, info) {
           console.log("Cant be Archived");
         }
       });
+    });
+  }else if(info.status == "loading"){
+    chrome.storage.sync.get(['books'],function(event){
+      if(event.books==true){
+        chrome.tabs.query({active: true,currentWindow:true},function(tabs){
+          url=tabs[0].url;
+          tabId=tabs[0].id;
+          if(url.includes("www.amazon") && url.includes('/dp/')){
+            var index_of_dp=url.indexOf('/dp/');
+            var length=url.length;
+            var new_test_url=url.substring(index_of_dp+4,length);
+            var ASIN_index=new_test_url.indexOf('/');
+            if(ASIN_index>0){
+                var ASIN=new_test_url.substring(0,new_test_url.indexOf('/'));
+            }else{
+                var ASIN=new_test_url.substring(0,new_test_url.length);
+            }
+            var xhr=new XMLHttpRequest();
+            var new_url="http://vbanos-dev.us.archive.org:5002/book/"+ASIN;
+            xhr.open("GET",new_url,true);
+            xhr.send(null);
+            xhr.onload=function(){
+              var response = JSON.parse(xhr.response);
+              console.log(response);
+              if(response.success==true && response.error==undefined){
+                var responses=response.responses;
+                for(var propName in responses) {
+                  if(responses.hasOwnProperty(propName)) {
+                    var propValue = responses[propName];
+                  }
+                }
+                var identifier=propValue.identifier;
+                if(identifier!=undefined||null){
+                  chrome.browserAction.setBadgeText({tabId: tabId, text:"B"});
+                }
+              }
+            }
+          }
+        });
+      }
     });
   }
 });

@@ -54,35 +54,35 @@ function get_whois(url){
     var host_url = url.replace(/^https{0,1}:\/\//, '').replace(/^www\./, '').replace(/\/.*/, '');
     var whois_url="https://www.whoisxmlapi.com/whoisserver/WhoisService?domainName="+host_url+"&username=anishkumarsarangi&password=archiveit";
     var http = new XMLHttpRequest();
-    // http.open("GET", whois_url, true);
-    // http.onreadystatechange = function() {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //         var html = "<b>"+"<span class='color_code_whois'>"+ host_url +'</span>'+"</b><br/><b>Domain-Name: </b>";
-    //         var xmldata = http.responseXML.documentElement;
-    //         if (xmldata.getElementsByTagName("domainName")){
-    //             html +="<span class='color_code_whois'>"+xmldata.getElementsByTagName("domainName")[0].innerHTML+"</span>";
-    //         } 
-    //         else {
-    //             html += "N/A";
-    //         }
-    //         if(xmldata.getElementsByTagName("registrarName")[0]){
-    //             html += '<br/>'+'<b>Registrar: </b>' +"<span class='color_code_whois'>"+
-    //                 xmldata.getElementsByTagName('registrarName')[0].innerHTML;
-    //         }
-    //         if(xmldata.getElementsByTagName("rawText")){
-    //             html += '<br/><br/>'+"<span style='color:black'>"+
-    //                 xmldata.getElementsByTagName('rawText')[0].innerHTML;
-    //         }
-    //         if(xmldata.getElementsByTagName("createdDateNormalized")){
-    //             html += '<br/><b>Registration Date: </b><br/>'+"<span style='color:black'>"+
-    //                 xmldata.getElementsByTagName('createdDateNormalized')[0].innerHTML;
-    //             html += '<br/><b>Updated Date: </b>'+"<span style='color:black'>"+
-    //                 xmldata.getElementsByTagName('updatedDateNormalized')[0].innerHTML;
-    //         }
-    //         document.getElementById("show_whois_data").innerHTML = html;
-    //     }
-    // };
-    // http.send(null);
+    http.open("GET", whois_url, true);
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var html = "<b>"+"<span class='color_code_whois'>"+ host_url +'</span>'+"</b><br/><b>Domain-Name: </b>";
+            var xmldata = http.responseXML.documentElement;
+            if (xmldata.getElementsByTagName("domainName")){
+                html +="<span class='color_code_whois'>"+xmldata.getElementsByTagName("domainName")[0].innerHTML+"</span>";
+            } 
+            else {
+                html += "N/A";
+            }
+            if(xmldata.getElementsByTagName("registrarName")[0]){
+                html += '<br/>'+'<b>Registrar: </b>' +"<span class='color_code_whois'>"+
+                    xmldata.getElementsByTagName('registrarName')[0].innerHTML;
+            }
+            if(xmldata.getElementsByTagName("rawText")){
+                html += '<br/><br/>'+"<span style='color:black'>"+
+                    xmldata.getElementsByTagName('rawText')[0].innerHTML;
+            }
+            if(xmldata.getElementsByTagName("createdDateNormalized")){
+                html += '<br/><b>Registration Date: </b><br/>'+"<span style='color:black'>"+
+                    xmldata.getElementsByTagName('createdDateNormalized')[0].innerHTML;
+                html += '<br/><b>Updated Date: </b>'+"<span style='color:black'>"+
+                    xmldata.getElementsByTagName('updatedDateNormalized')[0].innerHTML;
+            }
+            document.getElementById("show_whois_data").innerHTML = html;
+        }
+    };
+    http.send(null);
 }
 
 function get_details(){
@@ -136,29 +136,23 @@ function first_archive_details(){
 function recent_archive_details(){
     var url=getUrlByParameter('url');
     var xhr=new XMLHttpRequest();
-    //var new_url="http://web.archive.org/cdx/search?url="+url+"&limit=-1&output=json";
-    var new_url="http://internetarchive.sharethefacts.co/api/facts?api_key=349de26a8a1eeb9b7f94d6ebeebc9f9b87df936f";
+    var new_url="http://web.archive.org/cdx/search?url="+url+"&limit=-1&output=json";
     xhr.open("GET",new_url,true);
     xhr.send(null);
     xhr.onload=function(){
-
-        console.log(new_url);
         var data=JSON.parse(xhr.response);
-        console.log(data);
-        // console.log(data[1].widgets);
-        // var data=JSON.parse(xhr.response);
-        // if(data.length==0){
-        //     document.getElementById("recent_archive_date").innerHTML="( Data is not available -Not archived before )";
-        //     document.getElementById("recent_archive_time").innerHTML="( Data is not available-Not archived before )";
-        //     document.getElementById("link_recent").href="https://web.archive.org/web/2/"+url;
-        // }else {
-        //     var timestamp=data[1][1];
-        //     var date=timestamp.substring(4,6)+'/'+timestamp.substring(6,8)+'/'+timestamp.substring(0,4);
-        //     var time=timestamp.substring(8,10)+'.'+timestamp.substring(10,12)+'.'+timestamp.substring(12,14)
-        //     document.getElementById("recent_archive_date").innerHTML="( "+date+" )";
-        //     document.getElementById("recent_archive_time").innerHTML="( "+time+") according to Universal Time Coordinated (UTC)";
-        //     document.getElementById("link_recent").href="https://web.archive.org/web/2/"+url;
-        // }
+        if(data.length==0){
+            document.getElementById("recent_archive_date").innerHTML="( Data is not available -Not archived before )";
+            document.getElementById("recent_archive_time").innerHTML="( Data is not available-Not archived before )";
+            document.getElementById("link_recent").href="https://web.archive.org/web/2/"+url;
+        }else {
+            var timestamp=data[1][1];
+            var date=timestamp.substring(4,6)+'/'+timestamp.substring(6,8)+'/'+timestamp.substring(0,4);
+            var time=timestamp.substring(8,10)+'.'+timestamp.substring(10,12)+'.'+timestamp.substring(12,14)
+            document.getElementById("recent_archive_date").innerHTML="( "+date+" )";
+            document.getElementById("recent_archive_time").innerHTML="( "+time+") according to Universal Time Coordinated (UTC)";
+            document.getElementById("link_recent").href="https://web.archive.org/web/2/"+url;
+        }
     }
 }
 

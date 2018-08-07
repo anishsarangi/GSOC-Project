@@ -36,10 +36,8 @@ Different way that we provide context
 * Showing the Context Screens in windows
 * Showing the Context Screens in a single-window
 
-
 ### Things left to do/complete
 1) Improve the UI
-
 2) Adding more source of context
 
 ## License
