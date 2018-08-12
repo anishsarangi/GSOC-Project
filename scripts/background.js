@@ -867,7 +867,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, info) {
   }else if(info.status == "loading"){
     chrome.tabs.get(tabId, function(tab) {
       var received_url = tab.url;
-      if(!(received_url.includes("chrome://newtab/") || received_url.includes("chrome-extension://")||received_url.includes("alexa.com")||received_url.includes("whois.com")||received_url.includes("twitter.com")||received_url.includes("oauth"))){
+      if(!(received_url.includes("chrome://newtab/") || received_url.includes("chrome-extension://")||received_url.includes("alexa.com")||received_url.includes("whois.com")||received_url.includes("twitter.com")||received_url.includes("oauth")||received_url.includes("hoaxy"))){
         singlewindowurl=received_url;
         tagcloudurl=new URL(singlewindowurl);
         console.log(tagcloudurl.href);
