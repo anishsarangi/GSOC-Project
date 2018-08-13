@@ -1055,7 +1055,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, info) {
         });
       }
       chrome.storage.sync.get(['books'],function(event){
+        console.log("here");
         if(event.books==true){
+          console.log("ok here");
           chrome.tabs.query({active: true,currentWindow:true},function(tabs){
             url=tabs[0].url;
             console.log(url);

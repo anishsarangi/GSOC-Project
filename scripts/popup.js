@@ -286,7 +286,8 @@ function borrow_books(){
             if(result=="B"){
                 if(url.includes("www.amazon") && url.includes('/dp/')){
                     var xhr=new XMLHttpRequest();
-                    var new_url="http://vbanos-dev.us.archive.org:5002/book/"+url;
+                    var new_url="http://vbanos-dev.us.archive.org:5002/book?url="+url;
+                    console.log(new_url);
                     xhr.open("GET",new_url,true);
                     xhr.send(null);
                     xhr.onload=function(){
